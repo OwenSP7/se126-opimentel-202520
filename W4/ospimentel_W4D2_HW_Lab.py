@@ -45,8 +45,5 @@ print("-------------------------------------------------------------------------
 #    print(f"{dragons[i]:15} {riders[i]:30} {count[i]:3} {color1[i]:8} {color2[i]:8}")
 
 
-#Search for a drago
 
-found = "x"
-search = input("Which dragon are you looking for: ")
 
