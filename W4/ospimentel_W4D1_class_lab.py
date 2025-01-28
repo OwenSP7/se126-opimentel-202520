@@ -63,10 +63,14 @@ with open("W4/class_grades-1.csv") as csvfile:
 
 num_avg = [] # will hold each studnets numeric average of test scores
 let_avg = [] # will hold each students letter average of test scores
+class_avg = 0
 
 for i in range(0,len(fName)):
 # calculate average of current students
     a = (test1[i] + test2[i] + test3[i]) / 3
+
+    class_avg += a
+
 # add average to list
     num_avg.append(a)
     #can also divide in paratheisis
@@ -74,11 +78,15 @@ for i in range(0,len(fName)):
     l = letter(a)
     let_avg.append(l) # can also do: let_avg.append(letter(a))
 
+
+class_avg = class_avg / len(num_avg)
     #process the lists to display all data to user
-print(f"{'FNAME' :10} {'LNAME' :10}  {'T1' :3} {'T2' :3} {'T3' :3} {'# AVG' :6}{'L AVG'}")
+
+print(f"{'FNAME' :10} {'LNAME' :10}  {'T1' :3} {'T2' :3} {'T3' :3} {'# AVG' :6}{'L AVG'} ")
+
 for i in range(0,len(fName)):
-    print(f"{fName[i]:10} {lName[i]:10} {test1[i]:3} {test2[i]:3} {test3[i]:3} {num_avg[i]:6.2f}   {let_avg[i]}")
-    
+    print(f"{fName[i]:10} {lName[i]:10} {test1[i]:3} {test2[i]:3} {test3[i]:3} {num_avg[i]:6.2f}   {let_avg[i]}     ")
+    print(f" CLASS AVERAGE: {class_avg :.2f}")
 print("----------------------------------------")
 
 print("\n\n Welocme to the Student Search Program\n\n")
