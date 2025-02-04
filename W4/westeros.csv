@@ -1,17 +1,17 @@
-Eddard,Stark, GoldenKing@westeros.net,R&D,101
-Benjen,Stark, GoldenKing@westeros.net,Auditing,602
-Catelyn,Stark, GoldenKing@westeros.net,HR,303
-Arya,Stark, GoldenKing@westeros.net,R&D,104
-Robb,Stark, GoldenKing@westeros.net,R&D,105
-Sansa,Stark, GoldenKing@westeros.net,R&D,106
-Bran,Stark, GoldenKing@westeros.net,R&D,107
-Rickon,Stark, GoldenKing@westeros.net,R&D,108
-Jon,Snow, GoldenKing@westeros.net,Auditing,609
-Tyrion,Lannister, GoldenKing@westeros.net,Accounting,410
-Jaime,Lannister, GoldenKing@westeros.net,Accounting,411
-Cersei,Lannister, GoldenKing@westeros.net,Accounting,412
-Robert,Baratheon, GoldenKing@westeros.net,Sales,513
-Stannis,Baratheon, GoldenKing@westeros.net,Sales,514
-Renly,Baratheon, GoldenKing@westeros.net,Sales,515
-Daenerys,Targaryen, GoldenKing@westeros.net,Marketing,216
-Viserys,Targaryen, GoldenKing@westeros.net,Marketing,217
+Eddard,Stark,44,Ned,House Stark
+Benjen,Stark,42,ColdHands,The Night's Watch
+Catelyn,Stark,45,Mother,House Tully
+Arya,Stark,16,A_Girl,House Stark
+Robb,Stark,18,YoungWolf,House Stark
+Sansa,Stark,17,LittleDove,House Stark
+Bran,Stark,15,TheRaven,House Stark
+Rickon,Stark,14,Shaggydog,House Stark
+Jon,Snow,18,TheGhostBrother,The Night's Watch
+Tyrion,Lannister,36,TheImp,House Lannister
+Jaime,Lannister,39,TheGoldenHand,House Lannister
+Cersei,Lannister,39,TheLionQueen,House Lannister
+Robert,Baratheon,44,TheUsurper,House Baratheon
+Stannis,Baratheon,42,ThePromised,House Baratheon
+Renly,Baratheon,36,SummerKing,House Baratheon
+Daenerys,Targaryen,18,MotherOfDragons,House Targaryen
+Viserys,Targaryen,21,GoldenKing,House Targaryen
