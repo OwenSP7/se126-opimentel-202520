@@ -24,6 +24,32 @@
 #---------------Imports---------------------------------
 import csv
 
+#---------------Functions--------------------------------
+
+def display():
+    
+    #this handles the display of the character sheet to the user.
+    
+    print(f"  \nHere's your Adventurer:")
+    print(f"-------------------------------")
+
+    print (f"\nName: {name}")
+    print (f"\nRace: {raceName}")
+    print (f"\nClass: {className}")
+    print (f"\nLevel: {level}")
+    print (f"\n------------------------------------------------")
+    print ("\nStats:")
+
+    print (f"\nStrength:          {ste}({strMod})")
+    print (f"Dexterity:         {dex}({dexMod})")
+    print (f"Intelligence:      {ini}({intMod})")
+    print (f"Wisdom:            {wis}({wisMod})")
+    print (f"Constitution:      {con}({conMod})")
+    print (f"Charsima:          {car}({carMod})")
+    print (f"\nHP:                {hp}")
+    print (f"AC:                {ac}")
+    print(f"\n-------------------------------------------------")
+
 #----------------MAIN_CODE------------------------------
 
 # Vars
@@ -42,9 +68,10 @@ medium = False
 
 print (f" Welcome to our Project!")
 
+
 saveFile = input("Enter the relative path of the file you would like to load/save too: [make sure to filp forward slash to back slash]: ")
 
-
+# create lists that store file data
 nameList = []
 raceList = []
 classList = []
@@ -65,7 +92,21 @@ hpList = []
 acList = []
 raceNameList = []
 classNameList = []
+feats = {}
+chosenFeats = []
 
+
+# makes feat dictionary
+with open("W9/dnd_feats.csv") as csvfile:
+    file = csv.reader(csvfile)
+
+    #create lists
+    for rec in file:
+        feats.update({rec[0] : rec[1]})
+        
+
+
+#stores char data from filr to lists for later use
 with open(f"{saveFile}") as csvfile:
     file = csv.reader(csvfile)
 
@@ -91,9 +132,16 @@ with open(f"{saveFile}") as csvfile:
         raceNameList.append(rec[18])
         classNameList.append(rec[19])
 
-    print(f"{nameList}")
+    
 
 loadChoice = input("Would you like to load a Adventurer or make a new one? [Load = 1/New = 2]: ").lower()
+
+while loadChoice != "1" or loadChoice != "2":
+    print("***INVALID INPUT***")
+    loadChoice = input("Would you like to load a Adventurer or make a new one? [Load = 1/New = 2]: ").lower()
+
+
+
 
 if loadChoice == "1":
     
@@ -327,7 +375,7 @@ elif loadChoice == "2":
     race = input(f"\nSelect your Race: ")
 
     # prompts user to re-enter race if they enter a invalid input 
-    while float(race) > 9 or float(race) < 1:
+    while int(race) > 9 or int(race) < 1:
         print("***INVALID RACE***")
         race = input(f"\nSelect your race: ")
 
@@ -383,6 +431,7 @@ elif loadChoice == "2":
     wisMod = (wis - 10) / 2
     conMod = (con - 10) / 2
     carMod = (car - 10) / 2
+
 
     # calculations for HP and AC. also converts number from menu to name for display and starting equipment
     if charClass == "1":
@@ -462,31 +511,25 @@ elif loadChoice == "2":
 
 
 
+# change from string to int for math
+strMod = int(strMod)
+dexMod = int(dexMod)
+intMod = int(intMod)
+wisMod = int(wisMod)
+conMod = int(conMod)
+carMod = int(carMod)
+ste = int(ste)
+dex = int(dex)
+ini = int(ini)
+wis = int(wis)
+con = int(con)
+car = int(car)
+ac = int(ac)
+
+
 
 # basic character sheet
-print(f"  \nHere's your Adventurer:")
-print(f"-------------------------------")
-
-print (f"\nName: {name}")
-print (f"\nRace: {raceName}")
-print (f"\nClass: {className}")
-print (f"\nLevel: {level}")
-print (f"\n------------------------------------------------")
-print ("\nStats:")
-
-print (f"\nStrength:          {ste:.0f}({strMod:.0f})")
-print (f"Dexterity:         {dex:.0f}({dexMod:.0f})")
-print (f"Intelligence:      {ini:.0f}({intMod:.0f})")
-print (f"Wisdom:            {wis:.0f}({wisMod:.0f})")
-print (f"Constitution:      {con:.0f}({conMod:.0f})")
-print (f"Charsima:          {car:.0f}({carMod:.0f})")
-print (f"\nHP:                {hp:.0f}")
-print (f"AC:                {ac:.0f}")
-print(f"\n-------------------------------------------------")
-
-print(f"\nStarting Equipment: {startingGear}")
-
-print(f"\n-------------------------------------------------")
+display()
 
 answer = "n"
 
@@ -498,7 +541,12 @@ while answer != "y" and answer != "n" :
 
 # leveling up which is increasing hp and what ever 2 stats you'd like to increase up till level 20
 while answer == "y":
-    level += 1
+
+    # change from str to int for math
+    level = int(level) + 1
+    hp = int(hp)
+
+
     print("Your level went up by 1!")
     
     # Hp gained per level is deterimed by class.
@@ -519,71 +567,105 @@ while answer == "y":
     elif charClass == "10" or charClass == "12":
         hp += 4   
 
-    ## Stat increases are given on these level milestones
+    ## Stat increases or a feat are given on these level milestones
     if level == 4 or level == 8 or level == 12 or level == 16 or level == 19:
-        print (f"\nStat increase!: ")
-        print (f"----------------------")
-        print (f"Strength:      1")
-        print (f"Dexterity:     2")
-        print (f"Intelligence:  3")
-        print (f"Wisdom:        4")
-        print (f"Constitution:  5")
-        print (f"Charsima:      6")
-        print (f"----------------------")
-
-  
-
-        print("You can increase any stat by 2 or two stats by 1!")
-
-        statUp = input("Choose the 1st stat you would like to improve?: ")
-
-        if statUp == "1":
-            ste += 1
         
-        elif statUp == "2":
-            dex += 1
 
-        elif statUp == "3":
-            ini += 1
-        
-        elif statUp == "4":
-            wis += 1
+        levelChoice = input("Milestone reached! Would like to increase stats or obtain a feat? [Stat increase = 1 / obatain a feat = 2]: ")
 
-        elif statUp == "5":
-            con += 1
+        while level != "1" or levelChoice != "2":
+             print("***INVALID CHOICE***")
 
-        elif statUp == "6":
-            car += 1
-
-        ## trap loop for invalid input
-        while float(statUp) > 6 or float(statUp) < 1:
-            print("***INVALID CHOICE***")
-            statUp = input ("Choose the 1st stat you would like to improve?: ")
-
-        statUp = input ("Choose the 2nd stat you would like to improve?: ")
-        if statUp == "1":
-            ste += 1
-
-        elif statUp == "2":
-            dex += 1
-
-        elif statUp == "3":
-            ini += 1
-
-        elif statUp == "4":
-            wis += 1
-
-        elif statUp == "5":
-            con += 1
-
-        elif statUp == "6":
-            car += 1
+             levelChoice = input("Milestone reached! Would like to increase stats or obtain a feat? [Stat increase = 1 / obatain a feat = 2]: ")
 
 
-        ## trap loop for invalid input
-        while float(statUp) > 6 or float(statUp) < 1:
-            print("***INVALID CHOICE***")
+
+        if levelChoice == "1":
+
+            print (f"\nStat increase!: ")
+            print (f"----------------------")
+            print (f"Strength:      1")
+            print (f"Dexterity:     2")
+            print (f"Intelligence:  3")
+            print (f"Wisdom:        4")
+            print (f"Constitution:  5")
+            print (f"Charsima:      6")
+            print (f"----------------------")
+
+    
+
+            print("You can increase any stat by 2 or two stats by 1!")
+
+            statUp = input("Choose the 1st stat you would like to improve?: ")
+
+            ## trap loop for invalid input
+            while int(statUp) > 6 or int(statUp) < 1:
+                print("***INVALID CHOICE***")
+                statUp = input ("Choose the 1st stat you would like to improve?: ")
+
+            if statUp == "1":
+                ste += 1
+            
+            elif statUp == "2":
+                dex += 1
+
+            elif statUp == "3":
+                ini += 1
+            
+            elif statUp == "4":
+                wis += 1
+
+            elif statUp == "5":
+                con += 1
+
+            elif statUp == "6":
+                car += 1
+
+            
+            
+
             statUp = input ("Choose the 2nd stat you would like to improve?: ")
+
+            ## trap loop for invalid input
+            while int(statUp) > 6 or int(statUp) < 1:
+                print("***INVALID CHOICE***")
+                statUp = input ("Choose the 2nd stat you would like to improve?: ")
+
+            if statUp == "1":
+                ste += 1
+
+            elif statUp == "2":
+                dex += 1
+
+            elif statUp == "3":
+                ini += 1
+
+            elif statUp == "4":
+                wis += 1
+
+            elif statUp == "5":
+                con += 1
+
+            elif statUp == "6":
+                car += 1
+
+
+            
+        elif levelChoice == "2":
+
+            search = input("Enter the feat are you want [Player handbook only and no feats that increase stats]: ")
+            found = 0
+
+            for key in feats:
+                if search.lower() == key.lower():
+                    #store the found titles location in the dic
+                    found = key
+            if found != 0:
+                print(f"{"FEAT":20} {"DESCRIPTION"}")
+                print(f"{key:20}{feats[found]}")
+            else:
+                print("your search was not found")
+
 
     answer = input("Would you like to Level Up again? [y/n]: ")
     
@@ -598,30 +680,8 @@ while answer == "y":
         
 
 # post level up character sheet
-print(f"  \nHere's your Adventurer:")
-print(f"-------------------------------")
+display()
 
-print (f"\nName:  {name}")
-print (f"\nRace:  {raceName}")
-print (f"\nClass: {className}")
-print (f"\nLevel: {level}")
-print (f"\n------------------------------------------------")
-print ("\nStats:")
-
-print (f"\nStrength:          {ste:.0f}({strMod:.0f})")
-print (f"Dexterity:         {dex:.0f}({dexMod:.0f})")
-print (f"Intelligence:      {ini:.0f}({intMod:.0f})")
-print (f"Wisdom:            {wis:.0f}({wisMod:.0f})")
-print (f"Constitution:      {con:.0f}({conMod:.0f})")
-print (f"Charsima:          {car:.0f}({carMod:.0f})")
-print (f"\nHP:                 {hp:.0f}")
-print (f"AC:                 {ac:.0f}")
-print(f"\n-------------------------------------------------")
-
-print(f"\nStarting Equipment: {startingGear}")
-
-print(f"\n-------------------------------------------------")    
-  
 saveChoice = input("Would you like to save your Adventurer? [y/n]: ")
 
 nameList.append(name)
