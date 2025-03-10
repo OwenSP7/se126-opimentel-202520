@@ -9,7 +9,7 @@
 #-------------------Vars---------------------------------
 
 #         
-# stats     -       str/dex/int/wis/con/car - The characters attributes 
+# stats     -       ste/dex/ini/wis/con/car - The characters attributes 
 #charClass  -       The characters role
 #race       -       The characters physical appearence and genetic 
 #statMods   -       strMod/dexMod/intMod/wisMod/conMod/carMod - what you add to your roll involing stats
@@ -27,9 +27,9 @@ import csv
 #----------------MAIN_CODE------------------------------
 
 # Vars
-str = 0
+ste = 0
 dex = 0
-int = 0
+ini = 0
 wis = 0
 con = 0
 car = 0
@@ -42,59 +42,90 @@ medium = False
 
 print (f" Welcome to our Project!")
 
-loadChoice = input("Would you like to load a Adventurer or make a new one? [Load/New]: ").lower()
-
-if loadChoice == "Load":
-    saveFile = input("Enter the relative path of the file you would like to load")
-
-    nameList = []
-    raceList = []
-    classList = []
-    levelList = []
-    strList = []
-    dexList = []
-    intList = []
-    wisList = []
-    conList = []
-    carList = []
-    strModList = []
-    dexModList = []
-    intModsList = []
-    wisModList = []
-    conModsList = []
-    carModsList = []
-    hpList = []
-    acList = []
-
-    with open(f"{loadChoice}") as csvfile:
-        file = csv.reader(csvfile)
+saveFile = input("Enter the relative path of the file you would like to load/save too: [make sure to filp forward slash to back slash]: ")
 
 
+nameList = []
+raceList = []
+classList = []
+levelList = []
+strList = []
+dexList = []
+intList = []
+wisList = []
+conList = []
+carList = []
+strModList = []
+dexModList = []
+intModList = []
+wisModList = []
+conModList = []
+carModList = []
+hpList = []
+acList = []
+raceNameList = []
+classNameList = []
+
+with open(f"{saveFile}") as csvfile:
+    file = csv.reader(csvfile)
+
+    for rec in file:
+        nameList.append(rec[0])
+        raceList.append(rec[1])
+        classList.append(rec[2])
+        levelList.append(rec[3])
+        strList.append(rec[4])
+        dexList.append(rec[5])
+        intList.append(rec[6])
+        wisList.append(rec[7])
+        conList.append(rec[8])
+        carList.append(rec[9])
+        strModList.append(rec[10])
+        dexModList.append(rec[11])
+        intModList.append(rec[12])
+        wisModList.append(rec[13])
+        conModList.append(rec[14])
+        carModList.append(rec[15])
+        hpList.append(rec[16])
+        acList.append(rec[17])
+        raceNameList.append(rec[18])
+        classNameList.append(rec[19])
+
+    print(f"{nameList}")
+
+loadChoice = input("Would you like to load a Adventurer or make a new one? [Load = 1/New = 2]: ").lower()
+
+if loadChoice == "1":
+    
+    saveNumber = int(input("Enter the row number of the character you want to load: ")) - 1  
+   
+
+    name = nameList[saveNumber]
+    race = raceList[saveNumber]
+    charClass = classList[saveNumber]
+    level = levelList[saveNumber]
+    ste = strList[saveNumber]
+    dex = dexList[saveNumber]
+    ini = intList[saveNumber]
+    wis = wisList[saveNumber]
+    con = conList[saveNumber]
+    car = carList[saveNumber]
+    strMod = strModList[saveNumber]
+    dexMod = dexModList[saveNumber]
+    intMod = intModList[saveNumber]
+    wisMod = wisModList[saveNumber]
+    conMod = conModList[saveNumber]
+    carMod = carModList[saveNumber]
+    hp = hpList[saveNumber]
+    ac = acList[saveNumber]
+    raceName = raceNameList[saveNumber]
+    className = classNameList[saveNumber]
 
 
-    #create lists
-        for rec in file:
-            nameList.append(rec[0])
-            raceList.append(rec[1])
-            classList.append(rec[2])
-            levelList.append(rec[3])
-            strList.append(rec[4])
-            dexList.append(rec[5])
-            intList.append(rec[6])
-            wisList.append(rec[7])
-            conList.append(rec[8])
-            carList.append(rec[9])
-            strModList.append(rec[10])
-            dexModList.append(rec[11])
-            intModsList.append(rec[12])
-            wisModList.append(rec[13])
-            conModsList.append(rec[14])
-            carModsList.append(rec[15])
-            hpList.append(rec[16])
-            acList.append(rec[17])
 
 
-else:
+
+elif loadChoice == "2":
 
     #prompts user to enter charcter name
     name = input(f"  \nEnter your Adventurers name: ")
@@ -141,9 +172,9 @@ else:
 
     #Have the stats randomly generated 
     if statRollMethod == "1":
-        str =(random.randrange(1,20))
+        ste =(random.randrange(1,20))
         dex =(random.randrange(1,20))
-        int =(random.randrange(1,20))
+        ini =(random.randrange(1,20))
         wis =(random.randrange(1,20))
         con =(random.randrange(1,20))
         car =(random.randrange(1,20))
@@ -151,9 +182,9 @@ else:
         
     #Have the user manually select stats
     elif statRollMethod == "2":
-        str = float(input("What do you want for your Strength Stat (1-20): "))
+        ste = float(input("What do you want for your Strength Stat (1-20): "))
         dex = float(input("What do you want for your Dexterity Stat (1-20): "))
-        int = float(input("What do you want for your Intelligents Stat (1-20): "))
+        ini = float(input("What do you want for your Intelligents Stat (1-20): "))
         wis = float(input("What do you want for your Wisdom Stat (1-20): "))
         con = float(input("What do you want for your Constitution Stat (1-20): "))
         car = float(input("What do you want for your Charisma Stat (1-20): "))
@@ -162,103 +193,103 @@ else:
     #Have the stats pre-selected vis optimal Standard Array
     elif statRollMethod == "3": 
         if charClass == "1":
-            str = 15
+            ste = 15
             dex = 14
-            int = 8
+            ini = 8
             wis = 12
             con = 14
             car = 10
 
         if charClass == "2":
-            str = 15
+            ste = 15
             dex = 8
-            int = 10 
+            ini = 10 
             wis = 13
             con = 14
             car = 12
 
         elif charClass == "5":
-            str = 15
+            ste = 15
             dex = 8
-            int = 10 
+            ini = 10 
             wis = 12
             con = 13
             car = 14
 
         elif charClass ==   "6":
-            str = 10
+            ste = 10
             dex = 15
-            int = 12
+            ini = 12
             wis = 13
             con = 14
             car = 8
 
         elif charClass == "3":
-            str = 8
+            ste = 8
             dex = 15
-            int = 10
+            ini = 10
             wis = 13
             con = 14
             car = 12
 
 
         elif charClass == "4":
-            str = 12
+            ste = 12
             dex = 15
-            int = 10 
+            ini = 10 
             wis = 13
             con = 14
             car = 8
 
         
         elif charClass == "7":
-            str = 8
+            ste = 8
             dex = 13
-            int = 12
+            ini = 12
             wis = 10
             con = 14
             car = 15
 
         elif charClass == "8":
-            str = 12
+            ste = 12
             dex = 13
-            int = 10
+            ini = 10
             wis = 15
             con = 14
             car = 8
 
 
         elif charClass == "9":
-            str = 8
+            ste = 8
             dex = 14
-            int = 10 
+            ini = 10 
             wis = 12
             con = 13
             car = 15
 
 
         elif charClass == "11":
-            str = 10
+            ste = 10
             dex = 13
-            int = 12
+            ini = 12
             wis = 15
             con = 14
             car = 8
 
 
         elif charClass == "10":
-            str = 8
+            ste = 8
             dex = 13
-            int = 12
+            ini = 12
             wis = 10
             con = 14
             car = 15
 
 
         elif charClass == "12":
-            str = 8
+            ste = 8
             dex = 13
-            int = 15
+            ini = 15
             wis = 12
             con = 14
             car = 10
@@ -269,9 +300,9 @@ else:
     # displays the stat option that has been selected
     print (f"------------------------")
     print (f"\nHere are your {statSelection} Stats: ")
-    print (f"\nStrength:      {str:.0f}")
+    print (f"\nStrength:      {ste:.0f}")
     print (f"Dexterity:     {dex:.0f}")
-    print (f"Intelligents:  {int:.0f}")
+    print (f"Intelligence:  {ini:.0f}")
     print (f"Wisdom:        {wis:.0f}")
     print (f"Constitution:  {con:.0f}")
     print (f"Charisma:      {car:.0f}")
@@ -302,16 +333,16 @@ else:
 
     # add bonuses from races to stats
     if race == "1":
-        str += 1
+        ste += 1
         dex += 1
-        int += 1
+        ini += 1
         wis += 1
         con += 1
         car += 1
         raceName = "Human"
 
     elif race == "2":
-        str += 2 
+        ste += 2 
         car += 1
         raceName = "Dragonborn"
 
@@ -324,7 +355,7 @@ else:
         raceName = "Elf"
 
     elif race == "5":
-        int += 2
+        ini += 2
         raceName = "Gnome"
 
     elif race == "6":
@@ -336,19 +367,19 @@ else:
         raceName = "Halfling"
 
     elif race == "8":
-        str += 2 
+        ste += 2 
         con += 1
         raceName = "Half-Orc"
 
     elif race == "9":
         car += 2
-        int += 1
+        ini += 1
         raceName = "Tiefling"
         
     # calculates the stat mods. Used for later calculations
-    strMod = (str - 10) / 2
+    strMod = (ste - 10) / 2
     dexMod = (dex - 10) / 2
-    intMod = (int - 10) / 2
+    intMod = (ini - 10) / 2
     wisMod = (wis - 10) / 2
     conMod = (con - 10) / 2
     carMod = (car - 10) / 2
@@ -429,6 +460,9 @@ else:
     elif medium == True and dex >= 13:
         ac += 2
 
+
+
+
 # basic character sheet
 print(f"  \nHere's your Adventurer:")
 print(f"-------------------------------")
@@ -440,9 +474,9 @@ print (f"\nLevel: {level}")
 print (f"\n------------------------------------------------")
 print ("\nStats:")
 
-print (f"\nStrength:          {str:.0f}({strMod:.0f})")
+print (f"\nStrength:          {ste:.0f}({strMod:.0f})")
 print (f"Dexterity:         {dex:.0f}({dexMod:.0f})")
-print (f"Intelligence:      {int:.0f}({intMod:.0f})")
+print (f"Intelligence:      {ini:.0f}({intMod:.0f})")
 print (f"Wisdom:            {wis:.0f}({wisMod:.0f})")
 print (f"Constitution:      {con:.0f}({conMod:.0f})")
 print (f"Charsima:          {car:.0f}({carMod:.0f})")
@@ -472,7 +506,7 @@ while answer == "y":
         hp += 7
 
         if level == 20:
-            str += 4
+            ste += 4
             dex += 4
         
 
@@ -504,13 +538,13 @@ while answer == "y":
         statUp = input("Choose the 1st stat you would like to improve?: ")
 
         if statUp == "1":
-            str += 1
+            ste += 1
         
         elif statUp == "2":
             dex += 1
 
         elif statUp == "3":
-            int += 1
+            ini += 1
         
         elif statUp == "4":
             wis += 1
@@ -528,13 +562,13 @@ while answer == "y":
 
         statUp = input ("Choose the 2nd stat you would like to improve?: ")
         if statUp == "1":
-            str += 1
+            ste += 1
 
         elif statUp == "2":
             dex += 1
 
         elif statUp == "3":
-            int += 1
+            ini += 1
 
         elif statUp == "4":
             wis += 1
@@ -545,8 +579,6 @@ while answer == "y":
         elif statUp == "6":
             car += 1
 
-   
-    
 
         ## trap loop for invalid input
         while float(statUp) > 6 or float(statUp) < 1:
@@ -576,9 +608,9 @@ print (f"\nLevel: {level}")
 print (f"\n------------------------------------------------")
 print ("\nStats:")
 
-print (f"\nStrength:          {str:.0f}({strMod:.0f})")
+print (f"\nStrength:          {ste:.0f}({strMod:.0f})")
 print (f"Dexterity:         {dex:.0f}({dexMod:.0f})")
-print (f"Intelligence:      {int:.0f}({intMod:.0f})")
+print (f"Intelligence:      {ini:.0f}({intMod:.0f})")
 print (f"Wisdom:            {wis:.0f}({wisMod:.0f})")
 print (f"Constitution:      {con:.0f}({conMod:.0f})")
 print (f"Charsima:          {car:.0f}({carMod:.0f})")
@@ -592,11 +624,35 @@ print(f"\n-------------------------------------------------")
   
 saveChoice = input("Would you like to save your Adventurer? [y/n]: ")
 
-if saveChoice == "y":
+nameList.append(name)
+raceList.append(race)
+classList.append(charClass)
+levelList.append(level)
+strList.append(ste)
+dexList.append(dex)
+intList.append(ini)
+wisList.append(wis)
+conList.append(con)
+carList.append(car)
+strModList.append(strMod)
+dexModList.append(dexMod)
+intModList.append(intMod)
+wisModList.append(wisMod)
+conModList.append(conMod)
+carModList.append(carMod)
+hpList.append(hp)
+acList.append(ac)
+raceNameList.append(raceName)
+classNameList.append(className)
 
-    file = open(f'DND_Adventutrer.csv', "w")
+if saveChoice in "y":
 
-    file.write(f"{name},{raceName}")
+    
+
+    file = open(f'{saveFile}', "w")
+
+    for i in range(0,len(nameList)):
+        file.write(f"{nameList[i]},{raceList[i]},{classList[i]},{levelList[i]},{strList[i]},{dexList[i]},{intList[i]},{wisList[i]},{conList[i]},{carList[i]},{strModList[i]},{dexModList[i]},{intModList[i]},{wisModList[i]},{conModList[i]},{carModList[i]},{hpList[i]},{acList[i]},{raceNameList[i]},{classNameList[i]}\n")   
 else:
     print()
 
