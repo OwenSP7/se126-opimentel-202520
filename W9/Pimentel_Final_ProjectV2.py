@@ -46,9 +46,25 @@ def display():
     print (f"Wisdom:            {wis}({wisMod})")
     print (f"Constitution:      {con}({conMod})")
     print (f"Charsima:          {car}({carMod})")
-    print (f"\nHP:                {hp}")
+    print (f"\nHP:                {int(hp)}")
     print (f"AC:                {ac}")
-    print(f"\n-------------------------------------------------")
+    print (f"\n-------------------------------------------------")
+    
+    print ("FEATS:")
+    if feat1D != "NA":
+        print (f"{feat1D}")
+    if feat2D != "NA":
+        print (f"{feat2D}")
+    if feat3D != "NA":
+        print (f"{feat3D}") 
+    if feat4D != "NA":
+        print (f"{feat4D}")
+    if feat5D != "NA":
+        print (f"{feat5D}")      
+    print (f"\n-------------------------------------------------")         
+
+   
+
 
 #----------------MAIN_CODE------------------------------
 
@@ -62,6 +78,12 @@ car = 0
 ac = 10
 hp = 0
 level = 1
+featCounter = 0
+feat1D = "NA"
+feat2D = "NA"
+feat3D = "NA"
+feat4D = "NA"
+feat5D = "NA"
 heavy = False
 medium = False
 
@@ -71,7 +93,7 @@ print (f" Welcome to our Project!")
 
 saveFile = input("Enter the relative path of the file you would like to load/save too: [make sure to filp forward slash to back slash]: ")
 
-# create lists that store file data
+# all of these are just to hold data from files
 nameList = []
 raceList = []
 classList = []
@@ -93,7 +115,11 @@ acList = []
 raceNameList = []
 classNameList = []
 feats = {}
-chosenFeats = []
+feat1 = []
+feat2 = []
+feat3 = []
+feat4 = []
+feat5 = []
 
 
 # makes feat dictionary
@@ -131,12 +157,17 @@ with open(f"{saveFile}") as csvfile:
         acList.append(rec[17])
         raceNameList.append(rec[18])
         classNameList.append(rec[19])
+        feat1.append(rec[20])
+        feat2.append(rec[21])
+        feat3.append(rec[22])
+        feat4.append(rec[23])
+        feat5.append(rec[24])
 
-    
 
 loadChoice = input("Would you like to load a Adventurer or make a new one? [Load = 1/New = 2]: ").lower()
 
-while loadChoice != "1" or loadChoice != "2":
+#error trap loop
+while loadChoice != "1" and loadChoice != "2":
     print("***INVALID INPUT***")
     loadChoice = input("Would you like to load a Adventurer or make a new one? [Load = 1/New = 2]: ").lower()
 
@@ -168,6 +199,11 @@ if loadChoice == "1":
     ac = acList[saveNumber]
     raceName = raceNameList[saveNumber]
     className = classNameList[saveNumber]
+    feat1D = feat1[saveNumber]
+    feat2D = feat2[saveNumber]
+    feat3D = feat3[saveNumber]
+    feat4D = feat4[saveNumber]
+    feat5D = feat5[saveNumber]
 
 
 
@@ -197,7 +233,7 @@ elif loadChoice == "2":
     charClass = input(f"\nSelect your Class: ")
 
     # prevents user from moving on with invaild inputs
-    while float(charClass) > 12 or float(charClass) < 1:
+    while int(charClass) > 12 or int(charClass) < 1:
         print("***INVALID CLASS***")
         charClass = input(f"\nSelect your Class: ")
 
@@ -210,7 +246,8 @@ elif loadChoice == "2":
     print (f"   Standard Array:     3")
     statRollMethod = input("How would you like your stats?: ")
 
-    while float(statRollMethod) > 3 or float(statRollMethod) < 1:
+    #error trap loop
+    while int(statRollMethod) > 3 or int(statRollMethod) < 1:
         print("***INVALID CHOICE***")
         statRollMethod = input("How would you like your stats?: ")    
 
@@ -569,11 +606,11 @@ while answer == "y":
 
     ## Stat increases or a feat are given on these level milestones
     if level == 4 or level == 8 or level == 12 or level == 16 or level == 19:
-        
 
         levelChoice = input("Milestone reached! Would like to increase stats or obtain a feat? [Stat increase = 1 / obatain a feat = 2]: ")
 
-        while level != "1" or levelChoice != "2":
+        # error trap loop
+        while levelChoice != "1" and levelChoice != "2":
              print("***INVALID CHOICE***")
 
              levelChoice = input("Milestone reached! Would like to increase stats or obtain a feat? [Stat increase = 1 / obatain a feat = 2]: ")
@@ -592,7 +629,17 @@ while answer == "y":
             print (f"Charsima:      6")
             print (f"----------------------")
 
-    
+            #ensures lists remain same length if user doesnt pick feat
+            if level == 4:
+                feat1.append("NA")    
+            elif level == 8:
+                feat2.append("NA")  
+            elif level == 12:
+                feat3.append("NA")      
+            elif level == 16:
+                feat4.append("NA")   
+            elif level == 19:
+                feat5.append("NA") 
 
             print("You can increase any stat by 2 or two stats by 1!")
 
@@ -602,6 +649,7 @@ while answer == "y":
             while int(statUp) > 6 or int(statUp) < 1:
                 print("***INVALID CHOICE***")
                 statUp = input ("Choose the 1st stat you would like to improve?: ")
+
 
             if statUp == "1":
                 ste += 1
@@ -649,23 +697,53 @@ while answer == "y":
             elif statUp == "6":
                 car += 1
 
-
+               
             
         elif levelChoice == "2":
 
-            search = input("Enter the feat are you want [Player handbook only and no feats that increase stats]: ")
-            found = 0
+            featChoice = "n"
 
-            for key in feats:
-                if search.lower() == key.lower():
-                    #store the found titles location in the dic
-                    found = key
-            if found != 0:
-                print(f"{"FEAT":20} {"DESCRIPTION"}")
-                print(f"{key:20}{feats[found]}")
-            else:
-                print("your search was not found")
+            while featChoice != "y":
 
+                search = input("Enter the feat are you want [Player handbook only and no feats that increase stats]: ")
+                found = 0
+
+                for key in feats:
+                    if search.lower() == key.lower():
+                        #store the found titles location in the dic
+                        found = key
+                if found != 0:
+                    print(f"{"FEAT":20} {"DESCRIPTION"}")
+                    print(f"{found:20}{feats[found]}")
+
+                    featChoice = input("Is this the feat you want to learn? [y/n]: ")
+
+                    # this loop is to display and store chosen feat
+                    if featChoice == "y":
+                        featCounter += 1
+                        if featCounter == 1:
+                            feat1.append(found)
+                            feat1D = found
+                        elif featCounter == 2:
+                            feat2.append(found)
+                            feat2D = found
+                        elif featCounter == 3:
+                            feat3.append(found)
+                            feat3D = found
+                        elif featCounter == 4:
+                            feat4.append(found)
+                            feat4D = found
+                        elif featCounter == 5:
+                            feat5.append(found)  
+                            feat5D = found    
+
+                else:
+                    print("your search was not found")
+
+   
+    ## level 20 is the max level
+    if level == 20:
+        answer = "n" 
 
     answer = input("Would you like to Level Up again? [y/n]: ")
     
@@ -684,6 +762,7 @@ display()
 
 saveChoice = input("Would you like to save your Adventurer? [y/n]: ")
 
+#stores data to lists to save to file
 nameList.append(name)
 raceList.append(race)
 classList.append(charClass)
@@ -705,14 +784,29 @@ acList.append(ac)
 raceNameList.append(raceName)
 classNameList.append(className)
 
-if saveChoice in "y":
+# resolves issue with inde not matching up due to player not leveling up to 20
+if len(feat1) < len(nameList):
+    feat1.append("NA")
+if len(feat2) < len(nameList):
+    feat2.append("NA")
+if len(feat3) < len(nameList):
+    feat3.append("NA")
+if len(feat4) < len(nameList):
+    feat4.append("NA")
+if len(feat5) < len(nameList):
+    feat5.append("NA")
 
-    
+
+
+#save to file
+if saveChoice in "y":
 
     file = open(f'{saveFile}', "w")
 
     for i in range(0,len(nameList)):
-        file.write(f"{nameList[i]},{raceList[i]},{classList[i]},{levelList[i]},{strList[i]},{dexList[i]},{intList[i]},{wisList[i]},{conList[i]},{carList[i]},{strModList[i]},{dexModList[i]},{intModList[i]},{wisModList[i]},{conModList[i]},{carModList[i]},{hpList[i]},{acList[i]},{raceNameList[i]},{classNameList[i]}\n")   
+        file.write(f"{nameList[i]},{raceList[i]},{classList[i]},{levelList[i]},{strList[i]},{dexList[i]},{intList[i]},{wisList[i]},{conList[i]},{carList[i]},{strModList[i]},{dexModList[i]},{intModList[i]},{wisModList[i]},{conModList[i]},{carModList[i]},{hpList[i]},{acList[i]},{raceNameList[i]},{classNameList[i]},{feat1[i]},{feat2[i]},{feat3[i]},{feat4[i]},{feat5[i]}\n")   
+    file.flush()
+
 else:
     print()
 
