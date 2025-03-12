@@ -570,11 +570,16 @@ display()
 
 answer = "n"
 
-## trap loop for invalid input
-answer = input ("Do you want to level up? [y/n]: ").lower()
+level = int(level)
+
+## trap loop for invalid input and level check to stop user from going past 20
+
+if level < 20:
+    answer = input ("Do you want to level up? [y/n]: ").lower()
+
 while answer != "y" and answer != "n" :
         print("***INVALID CHOICE***")
-        answer = input("Would you like to Level Up again? [y/n]: ").lower()
+        answer = input("Would you like to Level Up? [y/n]: ").lower()
 
 # leveling up which is increasing hp and what ever 2 stats you'd like to increase up till level 20
 while answer == "y":
@@ -712,9 +717,13 @@ while answer == "y":
                     if search.lower() == key.lower():
                         #store the found titles location in the dic
                         found = key
+
+
+                
                 if found != 0:
-                    print(f"{"FEAT":20} {"DESCRIPTION"}")
-                    print(f"{found:20}{feats[found]}")
+                    # a format text (f"{FEAT:20}) should work here. and it did on the school pc but my laptop doesnt seem to like that so this will have to do
+                    print(f"FEAT                   DESCRIPTION")
+                    print(f"{found:}               {feats[found]}")
 
                     featChoice = input("Is this the feat you want to learn? [y/n]: ")
 
@@ -741,20 +750,18 @@ while answer == "y":
                     print("your search was not found")
 
    
-    ## level 20 is the max level
-    if level == 20:
-        answer = "n" 
-
-    answer = input("Would you like to Level Up again? [y/n]: ")
+    
+     ## level 20 is the max level
+    if level < 20:
+        answer = input("Would you like to Level Up again? [y/n]: ")
+    else:
+        answer = "n"
     
     ## trap loop for invalid input
     while answer != "y" and answer != "n" :
         print("***INVALID CHOICE***")
         answer = input("Would you like to Level Up again? [y/n]: ")
-
-    ## level 20 is the max level
-    if level == 20:
-        answer = "n"    
+  
         
 
 # post level up character sheet
